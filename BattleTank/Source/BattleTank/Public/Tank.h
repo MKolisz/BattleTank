@@ -10,6 +10,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -23,6 +24,9 @@ public:
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,15 +47,17 @@ public:
 	void AimAt(FVector HitLocation);
 
 private:
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 5000;
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	//local barrel reference to spawn projectiles
 	UTankBarrel* Barrel = nullptr;
 
+	//EditDefaultsOnly - can be changed only in BP for all the tanks, EditAnywhere - different tanks can get different values
+	UPROPERTY(EditDefaultsOnly, Category=Firing)
 	float ReloadTimeInSeconds = 3;
 	
 	double LastFireTime = 0;
