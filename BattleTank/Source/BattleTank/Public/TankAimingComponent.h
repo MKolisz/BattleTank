@@ -36,6 +36,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
@@ -45,7 +47,7 @@ private:
 	UTankTurret* Turret = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 5000;
+	float LaunchSpeed = 4000;
 
 	//EditDefaultsOnly - can be changed only in BP for all the tanks, EditAnywhere - different tanks can get different values
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
