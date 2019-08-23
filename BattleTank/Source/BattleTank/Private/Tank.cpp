@@ -11,6 +11,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::GetHealthPercent() const
 {
 	return (float)CurrentHealth/(float)StartingHealth;
@@ -24,7 +30,8 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AC
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank died"))
+		//This function calls OnPossessedTankDeath method in Player and AI Controller (because of the broadcast)	
+		OnDeath.Broadcast();
 	}
 
 	UE_LOG(LogTemp,Warning,TEXT("Damage amount:%f, damege to apply:%d"),DamageAmount,DamageToApply)
